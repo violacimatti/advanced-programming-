@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from Reader import GFFReader
 
-app= Flask(__name__)
+app= Flask(__name__, static_folder='static')
 reader = GFFReader('x.gff3')
 
 @app.route('/')
@@ -10,8 +10,7 @@ def index():
 
 @app.route('/basic_info')
 def basic_info():
-    info = reader.get_basic_info()
-    print(info)
+    info = reader.data.dtypes.to_dict()
     return render_template('basic_info.html', info=info)
 
 @app.route('/unique_seqids')
